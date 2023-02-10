@@ -1,14 +1,9 @@
-import Dependencies._
-
-ThisBuild / scalaVersion     := "2.13.10"
-ThisBuild / version          := "0.1.0-SNAPSHOT"
-ThisBuild / organization     := "com.example"
-ThisBuild / organizationName := "example"
+ThisBuild / scalaVersion := "2.13.10"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "ck-domain-logic-example",
-    libraryDependencies += munit % Test
+    libraryDependencies ++= Seq(
+      "dev.zio" %% "zio" % "2.0.6",
+      "dev.zio" %% "zio-prelude" % "1.0.0-RC16"
+    )
   )
-
-// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
