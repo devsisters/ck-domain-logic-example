@@ -1,9 +1,7 @@
 package example.entities
 
-// TODO: Use Map instead of List?
-
 final case class Data(
-  items: List[ItemData],
+  items: Map[ItemDataId, ItemData],
   shop: ShopData
 )
 
@@ -13,7 +11,7 @@ final case class ItemData(
 )
 
 final case class ShopData(
-  slots: List[ShopSlotData]
+  slots: Map[ShopSlotDataId, ShopSlotData]
 )
 
 final case class ShopSlotData(

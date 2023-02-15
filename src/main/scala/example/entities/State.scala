@@ -7,10 +7,10 @@ final case class State(
 )
 
 final case class Shop(
-  slots: List[ShopSlot]
+  slots: Map[ShopSlotDataId, ShopSlot]
 )
 
 final case class ShopSlot(
   dataId: ShopSlotDataId,
-  remainingItemAmount: Int
+  purchasedItemAmount: Int
 )
