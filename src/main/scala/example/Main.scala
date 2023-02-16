@@ -3,46 +3,46 @@ package example
 import zio.ZEnvironment
 import zio.prelude.fx.ZPure
 import example.entities._
-import example.logic._
+import example.logic.Programs._
 
-// object Main {
-//   val program: ZPure[Nothing, Unit, Unit, Any, Nothing, Int] =
-//     ZPure.succeed(1)
-
-//   def minusOne(n: Int): ZPure[Nothing, Unit, Unit, Any, String, Int] =
-//     if (n >= 1)
-//       ZPure.succeed(n - 1)
-//     else
-//       ZPure.fail("n cannot be less than 1")
-
-//   val accessEnv: ZPure[Nothing, Unit, Unit, String, Nothing, String] =
-//     for {
-//       env  <- ZPure.environment
-//       value = env.get
-//     } yield "environment: " + value
-
-//   val changeState: ZPure[Nothing, String, String, Any, Nothing, String] =
-//     for {
-//       state1 <- ZPure.get
-//       ()     <- ZPure.set(state1 + "2")
-//       state2 <- ZPure.get
-//     } yield "new state: " + state2
-
-//   val log: ZPure[String, Unit, Unit, Any, Nothing, String] =
-//     for {
-//       () <- ZPure.log("cookie")
-//       () <- ZPure.log("run")
-//       () <- ZPure.log("kingdom")
-//     } yield "done"
-
-//   def main(args: Array[String]): Unit = {
-//     println(program.run)
-//     println(minusOne(0).runEither)
-//     println(accessEnv.provideEnvironment(ZEnvironment("Hello")).run)
-//     println(changeState.run("1"))
-//     println(log.runLog)
-//   }
-// }
+//object Main {
+//  val program: ZPure[Nothing, Unit, Unit, Any, Nothing, Int] =
+//    ZPure.succeed(1)
+//
+//  def minusOne(n: Int): ZPure[Nothing, Unit, Unit, Any, String, Int] =
+//    if (n >= 1)
+//      ZPure.succeed(n - 1)
+//    else
+//      ZPure.fail("n cannot be less than 1")
+//
+//  val accessEnv: ZPure[Nothing, Unit, Unit, String, Nothing, String] =
+//    for {
+//      env  <- ZPure.environment
+//      value = env.get
+//    } yield "environment: " + value
+//
+//  val changeState: ZPure[Nothing, String, String, Any, Nothing, String] =
+//    for {
+//      state1 <- ZPure.get
+//      ()     <- ZPure.set(state1 + "2")
+//      state2 <- ZPure.get
+//    } yield "new state: " + state2
+//
+//  val log: ZPure[String, Unit, Unit, Any, Nothing, String] =
+//    for {
+//      () <- ZPure.log("cookie")
+//      () <- ZPure.log("run")
+//      () <- ZPure.log("kingdom")
+//    } yield "done"
+//
+//  def main(args: Array[String]): Unit = {
+//    println(program.run)
+//    println(minusOne(0).runEither)
+//    println(accessEnv.provideEnvironment(ZEnvironment("Hello")).run)
+//    println(changeState.run("1"))
+//    println(log.runLog)
+//  }
+//}
 
 object Main {
   val item1DataId     = DataId("item1")
@@ -64,7 +64,7 @@ object Main {
   )
 
   val initialState = State(
-    10000,
+    1000,
     Map.empty,
     Shop(
       Map(
@@ -74,14 +74,16 @@ object Main {
     )
   )
 
-  val scenario =
-    for {
-      () <- Programs.purchaseShopSlot(shopSlot1DataId)
-      () <- Programs.purchaseShopSlot(shopSlot2DataId)
-    } yield ()
-
   def main(args: Array[String]): Unit = {
-    val (events, result) = scenario.provideEnvironment(ZEnvironment(data)).runAll(initialState)
+    val scenario =
+      for {
+        () <- purchaseShopSlot(shopSlot1DataId)
+        () <- purchaseShopSlot(shopSlot2DataId)
+      } yield ()
+
+    val (events, result) =
+      scenario.provideEnvironment(ZEnvironment(data)).runAll(initialState)
+
     println(events)
     println(result)
   }

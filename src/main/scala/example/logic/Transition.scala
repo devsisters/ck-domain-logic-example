@@ -9,11 +9,13 @@ trait Transition[Evt] {
 
 object Transition {
   implicit val coinPaidTransition: Transition[Event.CoinPaid] =
-    event =>
-      for {
-        state <- ZPure.get
-        ()    <- ZPure.set(state.copy(coins = state.coins - event.amount))
-      } yield ()
+    new Transition[Event.CoinPaid] {
+      def run(event: Event.CoinPaid): ZPure[Nothing, State, State, Any, Error, Unit] =
+        for {
+          state <- ZPure.get
+          ()    <- ZPure.set(state.copy(coins = state.coins - event.amount))
+        } yield ()
+    }
 
   implicit val itemRewardedTransition: Transition[Event.ItemRewarded] =
     event =>
@@ -33,7 +35,10 @@ object Transition {
     event =>
       for {
         state    <- ZPure.get
-        shopSlot <- extractOption(state.shop.slots.get(event.shopSlotDataId), Error.EntityNotFound(event.shopSlotDataId))
+        shopSlot <- extractOption(
+                      state.shop.slots.get(event.shopSlotDataId),
+                      Error.EntityNotFound(event.shopSlotDataId)
+                    )
         ()       <- ZPure.set(
                       state.copy(
                         shop = state.shop.copy(
