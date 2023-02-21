@@ -1,7 +1,7 @@
 package example.logic
 
-import example.entities._
 import example.entities.Event._
+import example.entities._
 import zio.prelude.fx.ZPure
 
 object Programs {
