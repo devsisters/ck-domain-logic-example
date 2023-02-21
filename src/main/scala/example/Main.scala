@@ -35,7 +35,7 @@ object Main {
     )
 
     val initialState = State(
-      coins = 1000,
+      coins = 10000,
       items = Map.empty,
       shop = Shop(
         slots = Map(
