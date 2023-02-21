@@ -18,8 +18,18 @@ object Main {
       ),
       shop = ShopData(
         slots = Map(
-          shopSlot1DataId -> ShopSlotData(shopSlot1DataId, 300, item1DataId, 20),
-          shopSlot2DataId -> ShopSlotData(shopSlot2DataId, 5000, item2DataId, 1)
+          shopSlot1DataId -> ShopSlotData(
+            dataId = shopSlot1DataId,
+            coinPrice = 300,
+            itemDataId = item1DataId,
+            maxItemAmount = 20
+          ),
+          shopSlot2DataId -> ShopSlotData(
+            dataId = shopSlot2DataId,
+            coinPrice = 5000,
+            itemDataId = item2DataId,
+            maxItemAmount = 1
+          )
         )
       )
     )
@@ -29,8 +39,14 @@ object Main {
       items = Map.empty,
       shop = Shop(
         slots = Map(
-          shopSlot1DataId -> ShopSlot(shopSlot1DataId, 0),
-          shopSlot2DataId -> ShopSlot(shopSlot2DataId, 0)
+          shopSlot1DataId -> ShopSlot(
+            dataId = shopSlot1DataId,
+            purchasedItemAmount = 0
+          ),
+          shopSlot2DataId -> ShopSlot(
+            dataId = shopSlot2DataId,
+            purchasedItemAmount = 0
+          )
         )
       )
     )
